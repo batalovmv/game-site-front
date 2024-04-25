@@ -7,14 +7,14 @@ import './style.css';
 
 interface GameListProps {
     games: Game[];
-    showScreenshots: boolean;
+    getScreens: (type: number) => void;
 }
 
-const GameList: React.FC<GameListProps> = ({ games, showScreenshots }) => {
+const GameList: React.FC<GameListProps> = ({ games, getScreens }) => {
     return (
         <div className="game-list">
             {games.map(game => (
-                <GameCard key={game.id} game={game} showScreenshots={showScreenshots} />
+                <GameCard getScreens={getScreens} key={game.id} game={game} />
             ))}
         </div>
     );

@@ -17,6 +17,20 @@ export interface GameData {
     platforms: PlatformData[];
     tags: string[];
     languages: string[];
+    screenshots?: string[];
+}
+export interface tags{
+    id: number,
+    name: string,
+    slug: string,
+    language: string,
+    games_count: number,
+    image_background: string
+     
+}
+export interface ScreenShot{
+    id:number
+    image:string
 }
 export interface Game {
     id: number;

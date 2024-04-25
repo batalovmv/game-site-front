@@ -5,12 +5,12 @@ export const transformGameDataToGame = (gameData: GameData): Game => {
         id: gameData.id,
         title: gameData.name,
         coverImage: gameData.background_image,
-        screenshots: [], // Указать логику для скриншотов, если они доступны
+        screenshots: gameData.screenshots, // Убедитесь, что tags содержит данные о скриншотах
         rating: gameData.metacritic,
-        platforms: gameData.platforms.map(platform => platform.platform.name),
+        platforms: gameData.platforms ? gameData.platforms.map(platform => platform.platform.name) : [],
         multiplayerInfo: {
-            online: gameData.tags.includes('multiplayer'), // Пример, проверить правильность
-            maxPlayers: 4 // Пример, нужно определить логику
+            online: gameData.tags && gameData.tags.includes('multiplayer'),
+            maxPlayers: 4 // Нужно определить логику определения максимального числа игроков
         }
     };
 };

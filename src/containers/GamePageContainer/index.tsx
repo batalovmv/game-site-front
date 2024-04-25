@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 
-import { fetchGames } from '../../features/games/slice';
+import { fetchGames, fetchScreens } from '../../features/games/slice';
 import { FilterParams, GameData } from '../../features/games/types';
 import { RootState } from '../../app/store';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -17,15 +17,14 @@ import { useQueryParams } from '../../features/hooks/useQueryParams';
 
 const GamePageContainer: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { games, loading, error, filters } = useAppSelector((state: RootState) => state.games);
-    const { setSearchParam, updateSearchParams } = useQueryParams();
+    const { games, loading, error } = useAppSelector((state: RootState) => state.games);
+    const { setSearchParam, updateSearchParams } = useQueryParams(); 
 
     useEffect(() => {
+        console.log(`render`);
         const urlParams = new URLSearchParams(window.location.search);
         const initialFilters = Object.fromEntries(urlParams.entries());
-        console.log(`urlParams`, urlParams);
         dispatch(fetchGames(initialFilters));
-        console.log(`renders`);
     }, []);
 
     const handleFilterChange = (updatedFilters: Partial<FilterParams>) => {
@@ -33,6 +32,10 @@ const GamePageContainer: React.FC = () => {
         setSearchParam(key, value.toString());
         dispatch(fetchGames({ ...updatedFilters }));
     };
+    const handleGetScreens = (id: number)=>{
+         
+        return dispatch(fetchScreens(id))
+    }
 
   
 
@@ -53,7 +56,7 @@ const GamePageContainer: React.FC = () => {
             />
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
-            {transformedGames && <GameList games={transformedGames} showScreenshots={true} />}
+            {transformedGames && <GameList getScreens={handleGetScreens} games={transformedGames} />}
         </div>
     );
 };
