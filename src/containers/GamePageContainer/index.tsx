@@ -11,21 +11,30 @@ import PlatformFilter from '../../components/PlatformFilter';
 import MultiplayerFilter from '../../components/MultiplayerFilter';
 import GameList from '../../components/GameList';
 import { transformGameDataToGame } from '../../features/helpers/transformData';
+import { useQueryParams } from '../../features/hooks/useQueryParams';
 
 
 
 const GamePageContainer: React.FC = () => {
     const dispatch = useAppDispatch();
     const { games, loading, error, filters } = useAppSelector((state: RootState) => state.games);
+    const { setSearchParam, updateSearchParams } = useQueryParams();
 
     useEffect(() => {
-        dispatch(fetchGames(filters));
-    }, [dispatch, filters]);
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialFilters = Object.fromEntries(urlParams.entries());
+        console.log(`urlParams`, urlParams);
+        dispatch(fetchGames(initialFilters));
+        console.log(`renders`);
+    }, []);
 
     const handleFilterChange = (updatedFilters: Partial<FilterParams>) => {
-        // Обновление фильтров и повторная загрузка данных
-        dispatch(fetchGames({ ...filters, ...updatedFilters }));
+        const [key, value] = Object.entries(updatedFilters)[0];
+        setSearchParam(key, value.toString());
+        dispatch(fetchGames({ ...updatedFilters }));
     };
+
+  
 
     // Преобразование данных игр для компонента GameList
     const transformedGames = games?.results.map((gameData: GameData) => transformGameDataToGame(gameData));

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './style.css';
 interface FilterBarProps {
     onFilterChange: (filter: string) => void;
     onSortChange: (sortType: string) => void;

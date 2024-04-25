@@ -24,7 +24,9 @@ export const fetchGames = createAsyncThunk(
         const params = { ...filters, key: 'b4489d7e7e6148dea33055ddcaf86898' };
         try {
             const response = await axios.get(`https://api.rawg.io/api/games`, { params });
-            return response.data;
+            console.log(`response.data`, response.data);
+            const responseData = response.data
+            return { responseData,filters};
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || "Unknown error");
         }
@@ -46,7 +48,14 @@ const gameSlice = createSlice({
             })
             .addCase(fetchGames.fulfilled, (state, action) => {
                 state.loading = false;
-                state.games = action.payload;
+                state.games = action.payload.responseData;
+                console.log("state.filters", state.filters)
+                console.log("action.payload.filters", action.payload.filters)
+                if (state.filters !== action.payload.filters) {
+                    state.filters = action.payload.filters
+                }
+                console.log("state.filters", state.filters)
+                console.log("action.payload.filters", action.payload.filters)
                 state.error = null;
             })
             .addCase(fetchGames.rejected, (state, action) => {

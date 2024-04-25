@@ -5,10 +5,16 @@ export function useQueryParams() {
     const location = useLocation();
 
     const setSearchParam = (param: string, value: string) => {
+        const searchParams = new URLSearchParams();
+        searchParams.set(param, value);
+        navigate({ ...location, search: searchParams.toString() });
+    };
+    const updateSearchParams = (param: string, value: string ) => {
         const searchParams = new URLSearchParams(location.search);
         searchParams.set(param, value);
         navigate({ ...location, search: searchParams.toString() });
     };
 
-    return { setSearchParam };
+    return { setSearchParam, updateSearchParams };
 }
+
