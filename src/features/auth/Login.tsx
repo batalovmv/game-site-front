@@ -17,11 +17,6 @@ export const Login: React.FC = () => {
         dispatch(login({ login: username, password }));
     };
 
-    return (
-        
-            
-   
-    );
-};
-
-export default Login;
+    return <></>
+}
+export default Login

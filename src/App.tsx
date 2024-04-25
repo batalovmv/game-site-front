@@ -5,6 +5,7 @@ import './App.css'
 import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
 import Login from './features/auth/Login';
+import GamePageContainer from './containers/GamePageContainer';
 
 
 const App: React.FC = () => {
@@ -12,9 +13,10 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            {!isAuthenticated ? <Login /> : <ClientList />}
+            
+            {isAuthenticated ? <Login /> : <GamePageContainer />}
         </div>
     );
-};
+};//дселал условие всегда false чтоб отображался контейнер, потом хотел добавить авторизацию поэтому оставил так
 
 export default App;
