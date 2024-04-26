@@ -2,10 +2,16 @@ export interface FilterParams {
     page?: number;
     page_size?: number;
     search?: string;
-    platforms?: string;
+    platform?: number;
     tags?: string; // singleplayer,multiplayer
     language?: string;
     ordering?: string;
+}
+export interface platform {
+    id: number
+    name: string,
+    games_count?: number
+
 }
 //нужно добавить пункт про офлайн - онлайн
 export interface GameData {

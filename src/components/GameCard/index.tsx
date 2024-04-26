@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import { Card, Carousel, Modal } from 'antd';
+import Title from 'antd/es/typography/Title';
 
 interface Game {
     id: number;
@@ -19,11 +20,11 @@ interface GameCardProps {
     game: Game;
     getScreens: () => void;
     screens:string[]
+    loading:boolean
 }
 
-const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens }) => {
+const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }) => {
     const [isHovering, setIsHovering] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImage, setModalImage] = useState('');
     const handleMouseEnter = () => {
@@ -46,7 +47,9 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens }) => {
      return (
          <Card className="game-card" loading={loading} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
        
-            <h3>{game.title}</h3>
+             <div className="game-card-title">
+                 <h3>{game.title}</h3>
+             </div>
              {isHovering && screens?.length ? (
                 <>
                 <Carousel autoplay>
@@ -61,17 +64,18 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens }) => {
         open={isModalOpen} 
         onCancel={closeModal} 
         footer={null}
-                         width={'80%'}
+        width={'80%'}
+         
         centered
       >
-        <img src={modalImage} alt="Expanded screenshot"    />
+         <img className='modal-img' src={modalImage} alt="Expanded screenshot" style={{ width: '100%', height: 'auto' }}    />
           </Modal >
                  </>
                 
             ) : (
-                     <img src={game.coverImage} alt={game.title}  />
+                     <img src={game.coverImage} alt={game.title} />
             )}
-            <p>Rating: {game.rating}</p>
+            <p>Metacritic: {game.rating}</p>
             <p>Platforms: {game.platforms.join(', ')}</p>
             {game.multiplayerInfo.online && (
                 <p>Online Multiplayer: Up to {game.multiplayerInfo.maxPlayers} players</p>

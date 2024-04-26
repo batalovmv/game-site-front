@@ -7,10 +7,12 @@ import GameCard from "../../components/GameCard";
 import React from "react";
 import { fetchScreens } from "../../features/games/screens";
 import { createSelector } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 
 const GameCardContainer: React.FC<{ game: Game }> = ({ game }) => {
     const dispatch = useAppDispatch();
+    const { loading } = useAppSelector((state: RootState) => state.games);
     const selectScreensForGame = useMemo(() => {
         return createSelector(
             state => state.screens.screens,
@@ -27,6 +29,6 @@ const GameCardContainer: React.FC<{ game: Game }> = ({ game }) => {
         }
     }, [screens]);
 
-    return <GameCard game={game} screens={screens} getScreens={loadScreenshots} />;
+    return <GameCard loading={loading} game={game} screens={screens} getScreens={loadScreenshots} />;
 };
 export default React.memo(GameCardContainer)

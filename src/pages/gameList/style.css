@@ -1,0 +1,16 @@
+.styled-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.left-column {
+    flex: 1;
+    padding: 20px;
+    width: 200px;
+}
+
+.right-column {
+    flex: 3;
+    padding: 20px;
+}
