@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Game } from '../../features/games/types';
 import './style.css';
 import GameCardContainer from '../../containers/GameCardContainer';
@@ -11,6 +11,7 @@ interface GameListProps {
 }
 
 const GameList: React.FC<GameListProps> = ({ games}) => {
+
     console.log(`renderGameList`);
     return (
         <div className="game-list">

@@ -15,20 +15,27 @@ import { useQueryParams } from '../../features/hooks/useQueryParams';
 import MainPage from '../../pages/gameList';
 import { fetchGames } from '../../features/games/list/slice';
 import { fetchPlatforms } from '../../features/games/platforms/slice';
+import Pagination from 'antd/es/pagination';
 
 
 
 const GamePageContainer: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { games, loading, error } = useAppSelector((state: RootState) => state.games);
+    const { games, loading, error, currentPage, totalCount } = useAppSelector((state: RootState) => state.games);
     const { platforms} = useAppSelector((state: RootState) => state.platforms);
     const { setSearchParam, updateSearchParams } = useQueryParams(); 
     const [pageSize, setPageSize] = useState(20)
+    const [page, setPage] = useState(1)
+    
 
+   
     useEffect(() => {
         console.log(`renderGamePAgeStart`);
         const urlParams = new URLSearchParams(window.location.search);
         const initialFilters = Object.fromEntries(urlParams.entries());
+       if (initialFilters.page) {
+        setPage(Number(initialFilters.page))
+       } 
         dispatch(fetchGames(initialFilters));
         dispatch(fetchPlatforms())
     }, []);
@@ -38,7 +45,27 @@ const GamePageContainer: React.FC = () => {
         const [key, value] = Object.entries(updatedFilters)[0];
         setSearchParam(key, value.toString());
         dispatch(fetchGames({ ...updatedFilters }));
+        setPage(1);
     };
+    const handlePageChange = (page: number, pageSize: number) => {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('page', page.toString());
+        urlParams.set('pageSize', pageSize.toString());
+        setPageSize(pageSize);
+        setPage(page);
+        // Обновление URL в адресной строке браузера
+        window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+
+        // Подготовка фильтров для запроса к API
+        const updatedFilters = Object.fromEntries(urlParams.entries());
+        dispatch(fetchGames(updatedFilters));
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    };
+    
   
 
   console.log(`renderGamePage` );
@@ -52,6 +79,7 @@ const GamePageContainer: React.FC = () => {
         return Array.from({ length: pageSize }, (_, index) => ({
             id: index,
             title: `Placeholder Title ${index + 1}`,
+            metacritic:0,
             coverImage: '', // Заглушка для изображения обложки
             rating: 0, // Заглушка для рейтинга
             platforms: ['PC', 'Console'], // Заглушка для платформ
@@ -85,6 +113,16 @@ const GamePageContainer: React.FC = () => {
             <>
                  {loading && <GameList games={placeholderGames} />}
                  {!loading && transformedGames && <GameList games={transformedGames} />}
+                 {games && (
+                     <Pagination
+                         current={page}
+                         onChange={handlePageChange}
+                         total={games.count}
+                         pageSize={pageSize}
+                         showSizeChanger={true}
+                         onShowSizeChange={handlePageChange}
+                     />
+                 )}
                  {error && <p>Error: {error}</p>}
               </>
          }

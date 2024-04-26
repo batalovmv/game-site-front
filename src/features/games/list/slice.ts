@@ -7,6 +7,8 @@ interface GameState {
     games: ApiResponse | null;
     loading: boolean;
     error: string | null;
+    currentPage: number;  
+    totalCount: number;
 }
 
 
@@ -14,6 +16,8 @@ const initialState: GameState = {
     games: null,
     loading: false,
     error: null,
+    currentPage: 1,
+    totalCount: 0,
 };
 
 export const fetchGames = createAsyncThunk(
@@ -46,6 +50,7 @@ const gameSlice = createSlice({
                 state.loading = false;
                 console.log(`state.games`, action.payload);
                 state.games = action.payload;
+                state.totalCount = action.payload.count;
                 state.error = null;
             })
             .addCase(fetchGames.rejected, (state, action) => {

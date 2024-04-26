@@ -1,11 +1,10 @@
 export interface FilterParams {
-    page?: number;
-    page_size?: number;
     search?: string;
-    platform?: number;
-    tags?: string; // singleplayer,multiplayer
-    language?: string;
     ordering?: string;
+    platform?: string;
+    tags?: string;
+    page?: number;     
+    page_size?: number;  
 }
 export interface platform {
     id: number
