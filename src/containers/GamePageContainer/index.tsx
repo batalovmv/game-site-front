@@ -79,6 +79,7 @@ const GamePageContainer: React.FC = () => {
             coverImage: '', // Заглушка для изображения обложки
             rating: 0, // Заглушка для рейтинга
             platforms: ['PC', 'Console'], // Заглушка для платформ
+            genres:[],
             multiplayerInfo: {
                 online: false,
                 maxPlayers: 0

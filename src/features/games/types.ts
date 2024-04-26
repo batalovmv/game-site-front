@@ -23,6 +23,18 @@ export interface GameData {
     platforms: PlatformData[];
     tags: string[];
     languages: string[];
+    genres: GenrData[]
+}
+interface PlatformData {
+    platform: Platform;
+    released_at: string;
+    requirements: Requirements;
+}
+interface GenrData {
+    id: number;
+    name: string;
+    games_count: number;
+    image_background:string
 }
 export interface tags{
     id: number,
@@ -45,6 +57,7 @@ export interface Game {
     rating: number;
     metacritic:number;
     platforms: string[];
+    genres:string[]
 
 }
 
@@ -59,11 +72,7 @@ export interface ApiResponse {
 export interface GameCardProps {
     game: GameData;
 }
-interface PlatformData {
-    platform: Platform;
-    released_at: string;
-    requirements: Requirements;
-}
+
 
 interface Platform {
     id: number;
