@@ -1,7 +1,7 @@
 export interface FilterParams {
     search?: string;
     ordering?: string;
-    platform?: string;
+    platform?: number;
     tags?: string;
     page?: number;     
     page_size?: number;  

@@ -21,9 +21,9 @@ import Pagination from 'antd/es/pagination';
 
 const GamePageContainer: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { games, loading, error, currentPage, totalCount } = useAppSelector((state: RootState) => state.games);
+    const { games, loading, error } = useAppSelector((state: RootState) => state.games);
     const { platforms} = useAppSelector((state: RootState) => state.platforms);
-    const { setSearchParam, updateSearchParams } = useQueryParams(); 
+    const { setSearchParam } = useQueryParams(); 
     const [pageSize, setPageSize] = useState(20)
     const [page, setPage] = useState(1)
     
@@ -46,11 +46,12 @@ const GamePageContainer: React.FC = () => {
         setSearchParam(key, value.toString());
         dispatch(fetchGames({ ...updatedFilters }));
         setPage(1);
+        setPageSize(20)
     };
     const handlePageChange = (page: number, pageSize: number) => {
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('page', page.toString());
-        urlParams.set('pageSize', pageSize.toString());
+        urlParams.set('page_size', pageSize.toString());
         setPageSize(pageSize);
         setPage(page);
         // Обновление URL в адресной строке браузера
@@ -121,6 +122,7 @@ const GamePageContainer: React.FC = () => {
                          pageSize={pageSize}
                          showSizeChanger={true}
                          onShowSizeChange={handlePageChange}
+                         pageSizeOptions={['10', '20', '30', '40']}
                      />
                  )}
                  {error && <p>Error: {error}</p>}
