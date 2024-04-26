@@ -5,7 +5,6 @@ export const transformGameDataToGame = (gameData: GameData): Game => {
         id: gameData.id,
         title: gameData.name,
         coverImage: gameData.background_image,
-        screenshots: gameData.screenshots, // Убедитесь, что tags содержит данные о скриншотах
         rating: gameData.metacritic,
         platforms: gameData.platforms ? gameData.platforms.map(platform => platform.platform.name) : [],
         multiplayerInfo: {

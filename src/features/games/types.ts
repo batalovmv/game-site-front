@@ -17,7 +17,6 @@ export interface GameData {
     platforms: PlatformData[];
     tags: string[];
     languages: string[];
-    screenshots?: string[];
 }
 export interface tags{
     id: number,
@@ -55,7 +54,6 @@ export interface ApiResponse {
 
 export interface GameCardProps {
     game: GameData;
-    showScreenshots: boolean;
 }
 interface PlatformData {
     platform: Platform;

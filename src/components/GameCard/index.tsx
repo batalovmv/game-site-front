@@ -17,22 +17,17 @@ interface Game {
 
 interface GameCardProps {
     game: Game;
-    getScreens: (type: number) => void;
+    getScreens: () => void;
+    screens:string[]
 }
 
-const GameCard: React.FC<GameCardProps> = ({ game, getScreens }) => {
+const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens }) => {
     const [isHovering, setIsHovering] = useState(false);
-    const [screenshotsLoaded, setScreenshotsLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImage, setModalImage] = useState('');
-    const handleMouseEnter = async () => {
-        if (!screenshotsLoaded) {
-            setLoading(true);
-            await getScreens(game.id)
-            setLoading(false);
-            setScreenshotsLoaded(true);
-        }
+    const handleMouseEnter = () => {
+        getScreens();
         setIsHovering(true);
     };
 
@@ -47,16 +42,17 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens }) => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+    console.log(`renderCarad`);
      return (
          <Card className="game-card" loading={loading} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
        
             <h3>{game.title}</h3>
-            {isHovering && game.screenshots?.length ? (
+             {isHovering && screens?.length ? (
                 <>
                 <Carousel autoplay>
-                    {game.screenshots.map((screenshot, index) => (
-                        <div key={index} onClick={() => showModal(screenshot)}>
-                            <img src={screenshot} alt={`Screenshot ${index + 1}`} />
+                         {screens.map((screens, index) => (
+                             <div key={index} onClick={() => showModal(screens)}>
+                                 <img src={screens} alt={`Screenshot ${index + 1}`} />
                         </div>
                     ))}
                     
@@ -68,12 +64,12 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens }) => {
                          width={'80%'}
         centered
       >
-        <img src={modalImage} alt="Expanded screenshot"  style={{width:'100%'}}  />
+        <img src={modalImage} alt="Expanded screenshot"    />
           </Modal >
                  </>
                 
             ) : (
-                     <img src={game.coverImage} alt={game.title} style={{ width: '100%', maxHeight: '80vh' }} />
+                     <img src={game.coverImage} alt={game.title}  />
             )}
             <p>Rating: {game.rating}</p>
             <p>Platforms: {game.platforms.join(', ')}</p>
@@ -85,4 +81,4 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens }) => {
     );
 };
 
-export default GameCard;
+export default React.memo(GameCard);

@@ -1,8 +1,8 @@
 // GamePageContainer.tsx
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-import { fetchGames, fetchScreens } from '../../features/games/slice';
+import { fetchGames } from '../../features/games/list/slice';
 import { FilterParams, GameData } from '../../features/games/types';
 import { RootState } from '../../app/store';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -21,26 +21,27 @@ const GamePageContainer: React.FC = () => {
     const { setSearchParam, updateSearchParams } = useQueryParams(); 
 
     useEffect(() => {
-        console.log(`render`);
+        console.log(`renderGamePAgeStart`);
         const urlParams = new URLSearchParams(window.location.search);
         const initialFilters = Object.fromEntries(urlParams.entries());
         dispatch(fetchGames(initialFilters));
     }, []);
-
+    
     const handleFilterChange = (updatedFilters: Partial<FilterParams>) => {
+        console.log(`renderFilgerChange`);
         const [key, value] = Object.entries(updatedFilters)[0];
         setSearchParam(key, value.toString());
         dispatch(fetchGames({ ...updatedFilters }));
     };
-    const handleGetScreens = (id: number)=>{
-         
-        return dispatch(fetchScreens(id))
-    }
-
   
 
+  console.log(`renderGamePage` );
+
     // Преобразование данных игр для компонента GameList
-    const transformedGames = games?.results.map((gameData: GameData) => transformGameDataToGame(gameData));
+    const transformedGames = useMemo(() => { 
+        console.log(`renderGamePagetransformedGames`);
+        return games?.results.map((gameData: GameData) => transformGameDataToGame(gameData));
+    }, [games]);
 
     return (
         <div>
@@ -56,9 +57,9 @@ const GamePageContainer: React.FC = () => {
             />
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
-            {transformedGames && <GameList getScreens={handleGetScreens} games={transformedGames} />}
+            {transformedGames && <GameList games={transformedGames} />}
         </div>
     );
 };
 
-export default GamePageContainer;
+export default React.memo(GamePageContainer)

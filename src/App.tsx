@@ -10,7 +10,7 @@ import GamePageContainer from './containers/GamePageContainer';
 
 const App: React.FC = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-
+console.log(`renderApp`);
     return (
         <div className="App">
             
