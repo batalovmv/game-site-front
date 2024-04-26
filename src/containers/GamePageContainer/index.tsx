@@ -30,7 +30,6 @@ const GamePageContainer: React.FC = () => {
 
    
     useEffect(() => {
-        console.log(`renderGamePAgeStart`);
         const urlParams = new URLSearchParams(window.location.search);
         const initialFilters = Object.fromEntries(urlParams.entries());
        if (initialFilters.page) {
@@ -41,7 +40,6 @@ const GamePageContainer: React.FC = () => {
     }, []);
     
     const handleFilterChange = (updatedFilters: Partial<FilterParams>) => {
-        console.log(`renderFilgerChange`);
         const [key, value] = Object.entries(updatedFilters)[0];
         setSearchParam(key, value.toString());
         dispatch(fetchGames({ ...updatedFilters }));
@@ -69,11 +67,8 @@ const GamePageContainer: React.FC = () => {
     
   
 
-  console.log(`renderGamePage` );
-
     // Преобразование данных игр для компонента GameList
     const transformedGames = useMemo(() => { 
-        console.log(`renderGamePagetransformedGames`);
         return games?.results.map((gameData: GameData) => transformGameDataToGame(gameData));
     }, [games]);
     const placeholderGames: Game[] = useMemo(() => {

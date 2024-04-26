@@ -45,10 +45,7 @@ export interface Game {
     rating: number;
     metacritic:number;
     platforms: string[];
-    multiplayerInfo: {
-        online: boolean;
-        maxPlayers: number;
-    };
+
 }
 
 

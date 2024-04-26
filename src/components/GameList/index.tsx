@@ -7,12 +7,9 @@ import GameCardContainer from '../../containers/GameCardContainer';
 
 interface GameListProps {
     games: Game[];
-
 }
 
 const GameList: React.FC<GameListProps> = ({ games}) => {
-
-    console.log(`renderGameList`);
     return (
         <div className="game-list">
             {games.map(game => (

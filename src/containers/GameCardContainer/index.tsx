@@ -20,11 +20,8 @@ const GameCardContainer: React.FC<{ game: Game }> = ({ game }) => {
         );
     }, [game.id]);
     const screens = useAppSelector(selectScreensForGame);
-    console.log(`renderGAmeCardCOntsiner`);
-    console.log(`screens`, screens);
     const loadScreenshots = useCallback(() => {
         if (screens.length === 0) {
-            console.log(`dispatching`);
             dispatch(fetchScreens(game.id));
         }
     }, [screens]);

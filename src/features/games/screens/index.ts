@@ -29,8 +29,7 @@ export const fetchScreens = createAsyncThunk(
         }
         try {
             const response = await axios.get(`https://api.rawg.io/api/games/${gameId}/screenshots`, { params });
-            console.log("API Response:", response.data.results);
-            return response.data.results.map(s => s.image);
+            return response.data.results.map((s: { image: string; }) => s.image);
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || "Unknown error");
         }

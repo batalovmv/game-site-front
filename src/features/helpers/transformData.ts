@@ -8,9 +8,6 @@ export const transformGameDataToGame = (gameData: GameData): Game => {
         metacritic: gameData.metacritic,
         rating: gameData.rating,
         platforms: gameData.platforms ? gameData.platforms.map(platform => platform.platform.name) : [],
-        multiplayerInfo: {
-            online: gameData.tags && gameData.tags.includes('multiplayer'),
-            maxPlayers: 4 // Нужно определить логику определения максимального числа игроков
-        }
+        
     };
 };

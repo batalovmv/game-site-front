@@ -22,11 +22,10 @@ export const fetchPlatforms = createAsyncThunk(
         const params = { key: 'b4489d7e7e6148dea33055ddcaf86898' };
         try {
             const response = await axios.get(`https://api.rawg.io/api/platforms`, { params });
-            return response.data.results.map(s => {
+            return response.data.results.map((platform: { id: number; name: string; }) => {
                 return {
-                    id: s.id,
-                    name: s.name,
-                    count: s.count
+                    id: platform.id,
+                    name: platform.name
                 };
             });
         } catch (error: any) {
@@ -50,7 +49,6 @@ const platformsSlice = createSlice({
             })
             .addCase(fetchPlatforms.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(`action.payload`, action.payload);
                 state.platforms = action.payload;
                 state.error = null;
             })

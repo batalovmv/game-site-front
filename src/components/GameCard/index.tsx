@@ -33,7 +33,6 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
     const closeModal = () => {
         setIsModalOpen(false);
     };
-    console.log(`renderCarad`);
      return (
          <Card className="game-card" loading={loading} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
        
@@ -68,9 +67,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
              <p>Users Rating: {game.rating} {game.metacritic ? `Metacritic: ${game.metacritic}` : ''}</p>
            
             <p>Platforms: {game.platforms.join(', ')}</p>
-            {game.multiplayerInfo.online && (
-                <p>Online Multiplayer: Up to {game.multiplayerInfo.maxPlayers} players</p>
-            )}
+           
         
          </Card>
     );

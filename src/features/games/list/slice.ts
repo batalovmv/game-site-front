@@ -48,7 +48,6 @@ const gameSlice = createSlice({
             })
             .addCase(fetchGames.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log(`state.games`, action.payload);
                 state.games = action.payload;
                 state.totalCount = action.payload.count;
                 state.error = null;
