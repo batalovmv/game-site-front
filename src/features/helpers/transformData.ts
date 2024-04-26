@@ -5,7 +5,8 @@ export const transformGameDataToGame = (gameData: GameData): Game => {
         id: gameData.id,
         title: gameData.name,
         coverImage: gameData.background_image,
-        rating: gameData.metacritic,
+        metacritic: gameData.metacritic,
+        rating: gameData.rating,
         platforms: gameData.platforms ? gameData.platforms.map(platform => platform.platform.name) : [],
         multiplayerInfo: {
             online: gameData.tags && gameData.tags.includes('multiplayer'),

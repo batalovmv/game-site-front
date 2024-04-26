@@ -20,6 +20,7 @@ export interface GameData {
     released: string;
     background_image: string;
     metacritic: number;
+    rating:number;
     platforms: PlatformData[];
     tags: string[];
     languages: string[];
@@ -43,6 +44,7 @@ export interface Game {
     coverImage: string;
     screenshots?: string[];
     rating: number;
+    metacritic:number;
     platforms: string[];
     multiplayerInfo: {
         online: boolean;

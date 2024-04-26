@@ -26,7 +26,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange, onSortChange }) =
     }, [inputValue]);
     return (
         <div className="filter-bar">
-            <Button onClick={() => onSortChange('rating')}>Sort by Rating</Button>
+            <Button onClick={() => onSortChange('-rating')}>Sort by Rating</Button>
             <Input
                 type="text"
                 placeholder="Search games..."

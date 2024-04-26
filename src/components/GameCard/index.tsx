@@ -2,19 +2,9 @@ import React, { useState } from 'react';
 import './style.css';
 import { Card, Carousel, Modal } from 'antd';
 import Title from 'antd/es/typography/Title';
+import { Game } from '../../features/games/types';
 
-interface Game {
-    id: number;
-    title: string;
-    coverImage: string;
-    screenshots?: string[];
-    rating: number;
-    platforms: string[];
-    multiplayerInfo: {
-        online: boolean;
-        maxPlayers: number;
-    };
-}
+
 
 interface GameCardProps {
     game: Game;
@@ -75,7 +65,8 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
             ) : (
                      <img src={game.coverImage} alt={game.title} />
             )}
-            <p>Metacritic: {game.rating}</p>
+             <p>Users Rating: {game.rating} {game.metacritic ? `Metacritic: ${game.metacritic}` : ''}</p>
+           
             <p>Platforms: {game.platforms.join(', ')}</p>
             {game.multiplayerInfo.online && (
                 <p>Online Multiplayer: Up to {game.multiplayerInfo.maxPlayers} players</p>
