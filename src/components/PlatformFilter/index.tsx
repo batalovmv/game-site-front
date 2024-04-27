@@ -18,7 +18,7 @@ const [isShowAll, setIsShowAll] = useState(false)
         {platforms && <div className="platform-filter">
             <Title level={4}>Выбор платформы</Title>
             {displayderPlatforms.map(platform => (
-                <Button key={platform.id} onClick={() => onPlatformSelect(platform.id)}>
+                <Button className='platform-button' key={platform.id} onClick={() => onPlatformSelect(platform.id)}>
                     {platform.name}
                 </Button>
             ))}

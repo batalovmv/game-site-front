@@ -11,7 +11,7 @@
 .game-card:hover {
     
     z-index: 10;
-    transform: scale(1.4);
+    transform: scale(1.2);
     background-color: #f0f0f0;
 }
 
