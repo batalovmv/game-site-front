@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './style.css';
-import { Card, Carousel, Modal, Spin } from 'antd';
+import { Card, Carousel, Spin } from 'antd';
 import { Game } from '../../features/games/types';
-
+import { Image } from 'antd';
 
 
 interface GameCardProps {
@@ -11,36 +11,36 @@ interface GameCardProps {
     screens:string[]
     loading:boolean
 }
-
+//todo - реализовать спинер во время подгрузки скринов, сейчас это просто основная фотка, при долгой подрузке выглядит как все фотки в карусели - обычные. Нужно найти решение
 const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }) => {
     const [isHoveringImage, setIsHoveringImage] = useState(false);
-    const [isHoveringCard, setIsHoveringCard] = useState(false);
-    
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalImage, setModalImage] = useState('');
+  
+    const [loaded, setLoaded] = useState(false);
+
     
     const handleMouseEnter = () => {
-        getScreens();
+       
+        console.log(`screens`, screens);
+       
         setIsHoveringImage(true);
     };
 
     const handleMouseLeave = () => {
         setIsHoveringImage(false);
-        setIsHoveringCard(false);
+
     };
     const handleAddInfo = () => {
-        setIsHoveringCard(true);
+        if (screens.length === 0) {
+            getScreens();
+        }
+     
 
     };
-    const showModal = (image:string) => {
-        setModalImage(image);
-        setIsModalOpen(true);
-    };
+  
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+  
     return (
+       
         <Card
             className="game-card"
             loading={loading}
@@ -54,15 +54,21 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
                 ) : (
                     <>
                             {isHoveringImage && screens?.length ? (
-                            <Carousel autoplay>
+                                <Image.PreviewGroup
+                                    items={screens}
+                                >
+                                <Carousel autoplay draggable dots={true}>
                                 {screens.map((screen, index) => (
-                                    <div key={index} onClick={() => showModal(screen)}>
-                                        <img src={screen} alt={`Screenshot ${index + 1}`} />
-                                    </div>
+                                   
+                                        <Image key={index} src={loaded ? screen : game.coverImage} alt={`Screenshot ${index + 1}`} onLoad={() => setLoaded(true)} 
+                                            
+                                        />
+                                    
                                 ))}
                             </Carousel>
+                                </Image.PreviewGroup>
                         ) : (
-                            <img
+                                <Image
                                 src={game.coverImage}
                                 alt={game.title}
                                 onMouseEnter={handleMouseEnter}
@@ -72,15 +78,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
                 )
             }
         >
-            <Modal
-                open={isModalOpen}
-                onCancel={closeModal}
-                footer={null}
-                width={'80%'}
-                centered
-            >
-                <img className="modal-img" src={modalImage} alt="Expanded screenshot" style={{ width: '100%', height: 'auto' }} />
-            </Modal>
+          
             <div className="game-card-title">
                 <h3>{game.title}</h3>
             </div>
@@ -88,6 +86,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
             <p>Platforms: {game.platforms.join(', ')}</p>
             {/*isHoveringCard && <p>Genres: {game.genres.join(', ')}</p>*/} 
         </Card>
+   
     );
 };
 export default React.memo(GameCard);

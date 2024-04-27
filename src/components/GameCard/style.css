@@ -8,20 +8,21 @@
     position: relative;
 }
 
+/* Унифицированный стиль изображений внутри карточки */
+.game-card img,
+.game-card .ant-image-img {
+    height: 200px;
+    /* Стандартная высота изображений */
+    width: 100%;
+    object-fit: cover;
+}
+
 .game-card:hover {
-    
     z-index: 10;
     transform: scale(1.2);
     background-color: #f0f0f0;
 }
 
-
-.game-card img {
-    height: 150px;
-    width: 100%;
-    object-fit: cover;
-
-}
 .game-card-title {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -29,10 +30,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     height: 3em;
+    /* Убедитесь, что это подходит под ваш дизайн */
     line-height: 1.5em;
     margin: 0;
-
 }
+
 .game-card-loading {
     height: 200px;
     display: flex;
@@ -40,9 +42,3 @@
     align-items: center;
     padding-top: 70px;
 }
-
-.modal-img {
-    width: 100%;
-    height: auto;
-}
-
