@@ -3,6 +3,7 @@ import './style.css';
 import { Card, Carousel, Spin } from 'antd';
 import { Game } from '../../features/games/types';
 import { Image } from 'antd';
+import ImageCarousel from '../ImageCarousel';
 
 
 interface GameCardProps {
@@ -14,13 +15,11 @@ interface GameCardProps {
 //todo - реализовать спинер во время подгрузки скринов, сейчас это просто основная фотка, при долгой подрузке выглядит как все фотки в карусели - обычные. Нужно найти решение
 const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }) => {
     const [isHoveringImage, setIsHoveringImage] = useState(false);
-  
-    const [loaded, setLoaded] = useState(false);
-
-    
     const handleMouseEnter = () => {
        
-        console.log(`screens`, screens);
+        if (screens.length === 0) {
+            getScreens();
+        }
        
         setIsHoveringImage(true);
     };
@@ -29,13 +28,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
         setIsHoveringImage(false);
 
     };
-    const handleAddInfo = () => {
-        if (screens.length === 0) {
-            getScreens();
-        }
-     
-
-    };
+    
   
 
   
@@ -45,7 +38,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
             className="game-card"
             loading={loading}
             onMouseLeave={handleMouseLeave}
-            onMouseEnter={handleAddInfo}
+            onMouseEnter={handleMouseEnter}
             cover={
                 loading ? (
                     <div className="game-card-loading">
@@ -53,27 +46,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
                     </div>
                 ) : (
                     <>
-                            {isHoveringImage && screens?.length ? (
-                                <Image.PreviewGroup
-                                    items={screens}
-                                >
-                                <Carousel autoplay draggable dots={true}>
-                                {screens.map((screen, index) => (
-                                   
-                                        <Image key={index} src={loaded ? screen : game.coverImage} alt={`Screenshot ${index + 1}`} onLoad={() => setLoaded(true)} 
-                                            
-                                        />
-                                    
-                                ))}
-                            </Carousel>
-                                </Image.PreviewGroup>
-                        ) : (
-                                <Image
-                                src={game.coverImage}
-                                alt={game.title}
-                                onMouseEnter={handleMouseEnter}
-                            />
-                        )}
+                            {<ImageCarousel screens={screens} game={game} isHoveringImage={isHoveringImage}/> }
                     </>
                 )
             }
