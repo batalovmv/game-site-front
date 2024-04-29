@@ -12,15 +12,12 @@ const ImageCarousel = ({ screens, game, isHoveringImage  }: ImageCarouselProps) 
     const handleImageLoad = () => {
         setLoadedImagesCount(prevCount => prevCount + 1);
     };
-    const getFullImages =()=>{
-        const fulls = screens.map(screen => screen.full)
-        console.log(`fulls`, fulls);
-        return fulls
-    }
     console.log(`screens`, screens);
      if (isHoveringImage && screens.length>0) {
         return <>
-            <Image.PreviewGroup items={getFullImages()}>
+            <Image.PreviewGroup preview={{
+                onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
+            }}>
                 <Carousel autoplay draggable dots={true} style={{ display: loadedImagesCount >= screens.length ? 'block' : 'none' }}>
                     {screens.map((screen, index) => (
                         <Image
@@ -29,6 +26,9 @@ const ImageCarousel = ({ screens, game, isHoveringImage  }: ImageCarouselProps) 
                             width={'100%'}
                             alt={`Screenshot ${index + 1}`}
                             onLoad={() => handleImageLoad()}
+                            preview={{
+                                src: screen.full,
+                            }}
 
                         />
                     ))}
