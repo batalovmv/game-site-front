@@ -29,12 +29,18 @@ export const fetchScreens = createAsyncThunk(
         }
         try {
             const response = await axios.get(`https://api.rawg.io/api/games/${gameId}/screenshots`, { params });
-            return response.data.results.map((s: { image: string; }) => s.image);
+            // Теперь возвращаем объекты с обоими версиями изображений
+            return response.data.results.map((s: { image: string; }) => ({
+                full: s.image, // Полноразмерное изображение
+                thumb: s.image.replace('media/screenshots', 'media/resize/640/-/screenshots') // Уменьшенное изображение
+            }));
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || "Unknown error");
         }
     }
 );
+
+
 
 
 const screensSlice = createSlice({

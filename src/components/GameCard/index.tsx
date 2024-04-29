@@ -9,18 +9,16 @@ import ImageCarousel from '../ImageCarousel';
 interface GameCardProps {
     game: Game;
     getScreens: () => void;
-    screens:string[]
+    screens: [{ full: string, thumb: string }]
     loading:boolean
 }
 //todo - реализовать спинер во время подгрузки скринов, сейчас это просто основная фотка, при долгой подрузке выглядит как все фотки в карусели - обычные. Нужно найти решение
 const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }) => {
     const [isHoveringImage, setIsHoveringImage] = useState(false);
     const handleMouseEnter = () => {
-       
-        if (screens.length === 0) {
+        if (screens.length < 1) {
             getScreens();
         }
-       
         setIsHoveringImage(true);
     };
 

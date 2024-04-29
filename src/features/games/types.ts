@@ -14,6 +14,7 @@ export interface platform {
 }
 //нужно добавить пункт про офлайн - онлайн
 export interface GameData {
+    thumb: string;
     id: number;
     name: string;
     released: string;
@@ -51,6 +52,7 @@ export interface ScreenShot{
 }
 export interface Game {
     id: number;
+    thumb:string,
     title: string;
     coverImage: string;
     screenshots?: string[];

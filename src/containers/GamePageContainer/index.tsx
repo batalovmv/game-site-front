@@ -74,6 +74,7 @@ const GamePageContainer: React.FC = () => {
     const placeholderGames: Game[] = useMemo(() => {
         return Array.from({ length: pageSize }, (_, index) => ({
             id: index,
+            thumb:'',
             title: `Placeholder Title ${index + 1}`,
             metacritic:0,
             coverImage: '', // Заглушка для изображения обложки

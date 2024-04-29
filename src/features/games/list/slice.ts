@@ -26,7 +26,9 @@ export const fetchGames = createAsyncThunk(
         const params = { ...filters, key: 'b4489d7e7e6148dea33055ddcaf86898' };
         try {
             const response = await axios.get(`https://api.rawg.io/api/games`, { params });
-            return response.data;
+            console.log(`response.data`, response.data);
+            const newResult = response.data.results.map((result: { thumb: string; background_image: string; }) => result.thumb = result.background_image.replace('media/', 'media/resize/640/-/'));
+            return { ...response.data, newResult }
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || "Unknown error");
         }
