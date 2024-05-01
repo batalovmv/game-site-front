@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './style.css';
 import Input from 'antd/es/input/Input';
 import Button from 'antd/es/button';
+
 interface FilterBarProps {
     onFilterChange: (filter: string) => void;
     onSortChange: (sortType: string) => void;
@@ -13,6 +14,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange, onSortChange }) =
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     };
+    
 
     useEffect(() => {
         if (isFirstLoad) {
@@ -32,6 +34,8 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange, onSortChange }) =
                 placeholder="Search games..."
                 onChange={handleInputChange}
             />
+            
+            
         </div>
     );
 };

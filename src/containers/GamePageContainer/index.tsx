@@ -16,6 +16,7 @@ import MainPage from '../../pages/gameList';
 import { fetchGames } from '../../features/games/list/slice';
 import { fetchPlatforms } from '../../features/games/platforms/slice';
 import Pagination from 'antd/es/pagination';
+import Button from 'antd/es/button';
 
 
 
@@ -106,7 +107,7 @@ const GamePageContainer: React.FC = () => {
                         onMultiplayerSelect={(type) => handleFilterChange({ tags: type })}
                     />
                     {loading && <p>Loading...</p>}
-                    {error && <p>Error: {error}</p>}
+                    {error && <p>Error: {error}   <Button type="primary" onClick={() => handlePageChange}>Перезагрузить </Button></p>}
                 </>
          }
          rightChildren={

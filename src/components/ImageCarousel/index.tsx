@@ -24,6 +24,7 @@ const ImageCarousel = ({ game, isHoveringImage  }: ImageCarouselProps) => {
                 }} items={game.screens.map(e => e.full)} >
                     <Carousel dots={true} beforeChange={(_, next) => setСurrentIndex(next)} >
                         {game.screens.map((screen, index) => (
+                            
                             <Image
                                 key={screen.full}
                                 src={screen.thumb}
@@ -31,12 +32,13 @@ const ImageCarousel = ({ game, isHoveringImage  }: ImageCarouselProps) => {
                                 alt={`Screenshot ${index + 1}`}
                                 onLoad={handleImageLoad}
                                 onClick={() => { setСurrentIndex(index)}}
-                                
+                                loading="lazy"
                              
                             />
                         ))}
                   
                     </Carousel>
+                    
                 </Image.PreviewGroup>
             </Spin>
            
