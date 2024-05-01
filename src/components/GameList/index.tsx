@@ -10,6 +10,7 @@ interface GameListProps {
 }
 
 const GameList: React.FC<GameListProps> = ({ games}) => {
+    console.log(`render GameList`);
     return (
         <div className="game-list">
             {games.map(game => (

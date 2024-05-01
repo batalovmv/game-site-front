@@ -7,7 +7,7 @@ import { store } from './app/store.ts'
 import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+
       
      <Provider store={store}>
             <BrowserRouter >
@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             </BrowserRouter >
     </Provider>
       
-  </React.StrictMode>,
+
 )

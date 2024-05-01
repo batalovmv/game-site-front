@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import './style.css';
-import { Card, Carousel, Spin } from 'antd';
+import { Card, Spin } from 'antd';
 import { Game } from '../../features/games/types';
-import { Image } from 'antd';
+
 import ImageCarousel from '../ImageCarousel';
 
 
 interface GameCardProps {
     game: Game;
-    getScreens: () => void;
-    screens: [{ full: string, thumb: string }]
     loading:boolean
 }
 //todo - реализовать спинер во время подгрузки скринов, сейчас это просто основная фотка, при долгой подрузке выглядит как все фотки в карусели - обычные. Нужно найти решение
-const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }) => {
+const GameCard: React.FC<GameCardProps> = ({ game,loading }) => {
     const [isHoveringImage, setIsHoveringImage] = useState(false);
     const handleMouseEnter = () => {
-        if (screens.length < 1) {
-            getScreens();
-        }
+        
         setIsHoveringImage(true);
     };
 
@@ -27,7 +23,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
 
     };
     
-  
+    console.log(`render GameCard`);
 
   
     return (
@@ -44,7 +40,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, getScreens, screens,loading }
                     </div>
                 ) : (
                     <>
-                            {<ImageCarousel screens={screens} game={game} isHoveringImage={isHoveringImage}/> }
+                            {<ImageCarousel game={game} isHoveringImage={isHoveringImage}/> }
                     </>
                 )
             }

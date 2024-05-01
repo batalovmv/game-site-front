@@ -26,7 +26,7 @@ const GamePageContainer: React.FC = () => {
     const { setSearchParam } = useQueryParams(); 
     const [pageSize, setPageSize] = useState(20)
     const [page, setPage] = useState(1)
-    
+    console.log(`render GamePageContainer`);
 
    
     useEffect(() => {
@@ -37,6 +37,7 @@ const GamePageContainer: React.FC = () => {
        } 
         dispatch(fetchGames(initialFilters));
         dispatch(fetchPlatforms())
+        console.log(`123`, 123);
     }, []);
     
     const handleFilterChange = (updatedFilters: Partial<FilterParams>) => {
@@ -81,6 +82,7 @@ const GamePageContainer: React.FC = () => {
             rating: 0, // Заглушка для рейтинга
             platforms: ['PC', 'Console'], // Заглушка для платформ
             genres:[],
+            screens:[],
             multiplayerInfo: {
                 online: false,
                 maxPlayers: 0

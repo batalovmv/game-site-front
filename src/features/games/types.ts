@@ -24,7 +24,8 @@ export interface GameData {
     platforms: PlatformData[];
     tags: string[];
     languages: string[];
-    genres: GenrData[]
+    genres: GenrData[];
+    screens:Screen[]
 }
 interface PlatformData {
     platform: Platform;
@@ -50,6 +51,10 @@ export interface ScreenShot{
     id:number
     image:string
 }
+export interface Screen {
+    full:string,
+    thumb:string
+}
 export interface Game {
     id: number;
     thumb:string,
@@ -60,6 +65,7 @@ export interface Game {
     metacritic:number;
     platforms: string[];
     genres:string[]
+    screens: Screen[]
 
 }
 
